@@ -5,12 +5,14 @@ import ChatHeader from "./ChatHeader";
 import NoChatHistoryPlaceholder from "./NoChatHistoryPlaceholder";
 import MessageInput from "./MessageInput";
 import MessagesLoadingSkeleton from "./MessagesLoadingSkeleton";
+import { isChatAIUser } from "../lib/chatAi";
 
 function ChatContainer() {
   const {
     selectedUser,
     getMessagesByUserId,
     messages,
+    chatAITyping,
     isMessagesLoading,
     subscribeToMessages,
     unsubscribeFromMessages,
@@ -30,7 +32,7 @@ function ChatContainer() {
     if (messageEndRef.current) {
       messageEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [messages]);
+  }, [messages, chatAITyping]);
 
   return (
     <>
@@ -63,6 +65,11 @@ function ChatContainer() {
                 </div>
               </div>
             ))}
+            {chatAITyping && isChatAIUser(selectedUser) && (
+              <div className="chat chat-start">
+                <div className="chat-bubble bg-slate-800 text-slate-200 italic">ChatAI is typing...</div>
+              </div>
+            )}
             {/* 👇 scroll target */}
             <div ref={messageEndRef} />
           </div>

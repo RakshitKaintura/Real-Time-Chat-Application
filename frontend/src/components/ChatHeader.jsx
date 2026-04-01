@@ -2,11 +2,12 @@ import { XIcon } from "lucide-react";
 import { useChatStore } from "../store/useChatStore";
 import { useEffect } from "react";
 import { useAuthStore } from "../store/useAuthStore";
+import { isChatAIUser } from "../lib/chatAi";
 
 function ChatHeader() {
   const { selectedUser, setSelectedUser } = useChatStore();
   const { onlineUsers } = useAuthStore();
-  const isOnline = onlineUsers.includes(selectedUser._id);
+  const isOnline = isChatAIUser(selectedUser) || onlineUsers.includes(selectedUser._id);
 
   useEffect(() => {
     const handleEscKey = (event) => {
@@ -32,7 +33,14 @@ function ChatHeader() {
         </div>
 
         <div>
-          <h3 className="text-slate-200 font-medium">{selectedUser.fullName}</h3>
+          <div className="flex items-center gap-2">
+            <h3 className="text-slate-200 font-medium">{selectedUser.fullName}</h3>
+            {isChatAIUser(selectedUser) && (
+              <span className="text-[10px] uppercase tracking-wide bg-cyan-500/20 text-cyan-300 px-2 py-0.5 rounded-full">
+                AI
+              </span>
+            )}
+          </div>
           <p className="text-slate-400 text-sm">{isOnline ? "Online" : "Offline"}</p>
         </div>
       </div>

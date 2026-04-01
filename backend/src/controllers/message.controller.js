@@ -1,10 +1,14 @@
 import cloudinary from "../lib/cloudinary.js";
 import { getReceiverSocketId, io } from "../lib/socket.js";
+import { ensureChatAIUser, getChatAIUserId } from "../lib/chatAiUser.js";
+import { generateChatAIReply } from "../lib/gemini.js";
 import Message from "../models/Message.js";
 import User from "../models/User.js";
 
 export const getAllContacts = async (req, res) => {
   try {
+    await ensureChatAIUser();
+
     const loggedInUserId = req.user._id;
     const filteredUsers = await User.find({ _id: { $ne: loggedInUserId } }).select("-password");
 
@@ -39,6 +43,9 @@ export const sendMessage = async (req, res) => {
     const { text, image } = req.body;
     const { id: receiverId } = req.params;
     const senderId = req.user._id;
+    const chatAIUserId = await getChatAIUserId();
+    const isChatAIConversation = chatAIUserId.equals(receiverId);
+    const senderSocketId = getReceiverSocketId(senderId.toString());
 
     if (!text && !image) {
       return res.status(400).json({ message: "Text or image is required." });
@@ -67,9 +74,65 @@ export const sendMessage = async (req, res) => {
 
     await newMessage.save();
 
-    const receiverSocketId = getReceiverSocketId(receiverId);
-    if (receiverSocketId) {
-      io.to(receiverSocketId).emit("newMessage", newMessage);
+    if (!isChatAIConversation) {
+      const receiverSocketId = getReceiverSocketId(receiverId);
+      if (receiverSocketId) {
+        io.to(receiverSocketId).emit("newMessage", newMessage);
+      }
+    }
+
+    if (isChatAIConversation) {
+      if (senderSocketId) {
+        io.to(senderSocketId).emit("chatAI:typing", {
+          senderId: chatAIUserId.toString(),
+          isTyping: true,
+        });
+      }
+
+      const recentMessages = await Message.find({
+        $or: [
+          { senderId, receiverId: chatAIUserId },
+          { senderId: chatAIUserId, receiverId: senderId },
+        ],
+      })
+        .sort({ createdAt: -1 })
+        .limit(20)
+        .lean();
+
+      const conversationForPrompt = recentMessages
+        .reverse()
+        .map((msg) => ({
+          role: msg.senderId.toString() === chatAIUserId.toString() ? "assistant" : "user",
+          text: msg.text || (msg.image ? "[User shared an image]" : ""),
+        }))
+        .filter((entry) => entry.text);
+
+      let aiReplyText = "I am here. Tell me more.";
+      try {
+        aiReplyText = await generateChatAIReply(conversationForPrompt);
+      } catch (geminiError) {
+        console.error("Error generating ChatAI response:", geminiError.message);
+        aiReplyText = "I had trouble generating a response right now. Please try again.";
+      } finally {
+        if (senderSocketId) {
+          io.to(senderSocketId).emit("chatAI:typing", {
+            senderId: chatAIUserId.toString(),
+            isTyping: false,
+          });
+        }
+      }
+
+      const aiMessage = new Message({
+        senderId: chatAIUserId,
+        receiverId: senderId,
+        text: aiReplyText,
+      });
+
+      await aiMessage.save();
+
+      if (senderSocketId) {
+        io.to(senderSocketId).emit("newMessage", aiMessage);
+      }
     }
 
     res.status(201).json(newMessage);
@@ -81,6 +144,8 @@ export const sendMessage = async (req, res) => {
 
 export const getChatPartners = async (req, res) => {
   try {
+    await ensureChatAIUser();
+
     const loggedInUserId = req.user._id;
 
     // find all the messages where the logged-in user is either sender or receiver
