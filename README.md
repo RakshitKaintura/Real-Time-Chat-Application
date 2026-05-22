@@ -1,15 +1,33 @@
-# 💬 Real-Time Chat Application
+<div align="center">
+  
+# 💬 Real-Time Chat Application with AI Chat Bot Integration
 
 A modern, full-stack real-time chat application built with the MERN stack, featuring JWT authentication, Socket.io messaging, and a beautiful user interface.
 
-![Chat Application](https://img.shields.io/badge/Status-Live-success)
-![License](https://img.shields.io/badge/License-MIT-blue)
-![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?logo=mongodb&logoColor=white)
-![Express](https://img.shields.io/badge/Express-000000?logo=express&logoColor=white)
-![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)
-![Node.js](https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=white)
+[![Status](https://img.shields.io/badge/Status-Live-success?style=for-the-badge)]()
+[![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)]()
+[![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)]()
+[![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)]()
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)]()
+[![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)]()
 
 🌐 **Live Demo:** [https://chat-app-y5rr.onrender.com/login](https://chat-app-y5rr.onrender.com/login)
+
+</div>
+
+---
+
+## 📋 Table of Contents
+- [📸 Screenshots](#-screenshots)
+- [✨ Features](#-features)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [🚀 Getting Started](#-getting-started)
+- [📁 Project Structure](#-project-structure)
+- [🔑 Key Features Breakdown](#-key-features-breakdown)
+- [🌐 Deployment](#-deployment)
+- [🤝 Contributing](#-contributing)
+- [📝 License](#-license)
+- [👨‍💻 Author](#-author)
 
 ---
 
@@ -18,10 +36,10 @@ A modern, full-stack real-time chat application built with the MERN stack, featu
 <div align="center">
 
 ### Authentication Pages
-<img src="frontend/public/LoginPage.png" alt="Login Page" width="45%"/> <img src="frontend/public/SignupPage.png" alt="Signup Page" width="45%"/>
+<img src="frontend/public/LoginPage.png" alt="Login Page" width="45%"/> &nbsp; <img src="frontend/public/SignupPage.png" alt="Signup Page" width="45%"/>
 
 ### Chat Interface
-<img src="frontend/public/ChatPage.png" alt="Chat Page" width="45%"/> <img src="frontend/public/RealTimeChat.png" alt="Real-Time Messaging" width="45%"/>
+<img src="frontend/public/ChatPage.png" alt="Chat Page" width="45%"/> &nbsp; <img src="frontend/public/RealTimeChat.png" alt="Real-Time Messaging" width="45%"/>
 
 *Beautiful, modern UI with real-time messaging and image sharing capabilities*
 
@@ -59,32 +77,24 @@ A modern, full-stack real-time chat application built with the MERN stack, featu
 
 ## 🛠️ Tech Stack
 
-### Frontend
-- **React** - UI library for building interactive interfaces
-- **Tailwind CSS** - Utility-first CSS framework
-- **DaisyUI** - Tailwind CSS component library
-- **Zustand** - Lightweight state management
-- **Socket.io Client** - Real-time bidirectional communication
+<div align="center">
 
-### Backend
-- **Node.js** - JavaScript runtime environment
-- **Express.js** - Web application framework
-- **Socket.io** - Real-time websocket communication
-- **MongoDB** - NoSQL database
-- **Mongoose** - MongoDB object modeling
+| Frontend | Backend | Services & Tools |
+| :---: | :---: | :---: |
+| React | Node.js | Cloudinary |
+| Tailwind CSS | Express.js | Resend |
+| DaisyUI | Socket.io | Arcjet |
+| Zustand | MongoDB | JWT |
+| Socket.io Client | Mongoose | Bcrypt |
 
-### Services & Tools
-- **Cloudinary** - Image hosting and management
-- **Resend** - Email delivery service
-- **Arcjet** - API rate limiting and security
-- **JWT** - JSON Web Tokens for authentication
-- **Bcrypt** - Password hashing library
+</div>
 
 ---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
+Make sure you have the following installed on your machine:
 - Node.js (v14 or higher)
 - MongoDB (local or Atlas)
 - npm or yarn package manager
@@ -92,56 +102,46 @@ A modern, full-stack real-time chat application built with the MERN stack, featu
 ### Installation
 
 1. **Clone the repository**
-```bash
+   ```bash
    git clone https://github.com/RakshitKaintura/CHAT_APP.git
    cd CHAT_APP
-```
+   ```
 
 2. **Install dependencies**
-```bash
+   ```bash
    # Install backend dependencies
    npm install
 
    # Install frontend dependencies
    cd frontend
    npm install
-```
+   ```
 
 3. **Environment Variables**
    
-   Create a `.env` file in the root directory:
-```env
-   # Server
-   PORT=5000
-   NODE_ENV=development
-   
-   # Database
-   MONGODB_URI=your_mongodb_connection_string
-   
-   # JWT
-   JWT_SECRET=your_jwt_secret_key
-   
-   # Cloudinary
-   CLOUDINARY_CLOUD_NAME=your_cloud_name
-   CLOUDINARY_API_KEY=your_api_key
-   CLOUDINARY_API_SECRET=your_api_secret
-   
-   # Resend
-   RESEND_API_KEY=your_resend_api_key
-   
-   # Arcjet
-   ARCJET_KEY=your_arcjet_key
-```
+   Create a `.env` file in the root directory and add the following variables:
+
+   | Variable | Description |
+   | :--- | :--- |
+   | `PORT` | Server port (default: 5000) |
+   | `NODE_ENV` | `development` or `production` |
+   | `MONGODB_URI` | Your MongoDB connection string |
+   | `JWT_SECRET` | Your JWT secret key |
+   | `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name |
+   | `CLOUDINARY_API_KEY` | Cloudinary API key |
+   | `CLOUDINARY_API_SECRET` | Cloudinary API secret |
+   | `RESEND_API_KEY` | Resend API key |
+   | `ARCJET_KEY` | Arcjet key |
 
 4. **Run the application**
-```bash
+   ```bash
    # Run backend (from root directory)
    npm run dev
 
    # Run frontend (from frontend directory)
    cd frontend
    npm run dev
-```
+   ```
 
 5. **Access the application**
    - Frontend: `http://localhost:5173`
@@ -150,25 +150,25 @@ A modern, full-stack real-time chat application built with the MERN stack, featu
 ---
 
 ## 📁 Project Structure
-```
+```text
 CHAT_APP/
 ├── frontend/              # Frontend React application
 │   ├── src/
-│   │   ├── components/   # React components
-│   │   ├── pages/        # Page components
-│   │   ├── store/        # Zustand store
-│   │   ├── utils/        # Utility functions
-│   │   └── App.jsx       # Main app component
-│   ├── public/           # Static assets & screenshots
+│   │   ├── components/    # React components
+│   │   ├── pages/         # Page components
+│   │   ├── store/         # Zustand store
+│   │   ├── utils/         # Utility functions
+│   │   └── App.jsx        # Main app component
+│   ├── public/            # Static assets & screenshots
 │   └── package.json
-├── backend/              # Backend application
-│   ├── controllers/      # Route controllers
-│   ├── models/          # Database models
-│   ├── routes/          # API routes
-│   ├── middleware/      # Custom middleware
-│   ├── socket/          # Socket.io handlers
-│   └── server.js        # Server entry point
-├── .env                 # Environment variables
+├── backend/               # Backend application
+│   ├── controllers/       # Route controllers
+│   ├── models/            # Database models
+│   ├── routes/            # API routes
+│   ├── middleware/        # Custom middleware
+│   ├── socket/            # Socket.io handlers
+│   └── server.js          # Server entry point
+├── .env                   # Environment variables
 └── package.json
 ```
 
@@ -176,24 +176,24 @@ CHAT_APP/
 
 ## 🔑 Key Features Breakdown
 
-### Real-Time Messaging
+### 📡 Real-Time Messaging
 The application uses Socket.io to establish bidirectional communication between clients and the server, enabling instant message delivery without polling.
 
-### Authentication Flow
+### 🔐 Authentication Flow
 1. User registers with email and password
 2. Password is hashed using bcrypt
 3. JWT token is generated and sent to client
 4. Token is stored and used for authenticated requests
 5. Middleware validates token on protected routes
 
-### Image Upload Process
+### 🖼️ Image Upload Process
 1. User selects an image
 2. Image is uploaded to Cloudinary
 3. Cloudinary returns secure URL
 4. URL is stored in MongoDB
 5. Image is displayed in chat interface
 
-### Presence System
+### 🟢 Presence System
 - Socket.io tracks connected users
 - Online status is broadcasted to all clients
 - Disconnection events update user status
@@ -206,11 +206,11 @@ The application uses Socket.io to establish bidirectional communication between 
 The application is deployed on Render's free tier. To deploy your own instance:
 
 1. **Push to GitHub**
-```bash
+   ```bash
    git add .
    git commit -m "Ready for deployment"
    git push origin main
-```
+   ```
 
 2. **Deploy on Render**
    - Create a new Web Service
@@ -242,17 +242,17 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Rakshit Kaintura**
 - GitHub: [@RakshitKaintura](https://github.com/RakshitKaintura)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
-- Portfolio: [your-portfolio.com](https://your-portfolio.com)
+- LinkedIn: [Your LinkedIn (Add here)](https://linkedin.com/in/yourprofile)
+- Portfolio: [your-portfolio.com (Add here)](https://your-portfolio.com)
 
 ---
 
 ## 🙏 Acknowledgments
 
-- Socket.io for real-time communication
-- Cloudinary for image hosting
-- Resend for email services
-- Arcjet for security solutions
+- [Socket.io](https://socket.io/) for real-time communication
+- [Cloudinary](https://cloudinary.com/) for image hosting
+- [Resend](https://resend.com/) for email services
+- [Arcjet](https://arcjet.com/) for security solutions
 - The amazing open-source community
 
 ---
